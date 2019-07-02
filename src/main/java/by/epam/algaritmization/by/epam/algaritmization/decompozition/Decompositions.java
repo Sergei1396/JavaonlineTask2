@@ -17,7 +17,26 @@ public class Decompositions {
 // 4. На плоскости заданы своими координатами n точек. Написать
 // метод(методы), определяющие, между какими из пар точек самое большое
 // расстояние. Указание. Координаты точек занести в массив.
-        decomposition4();
+//        decomposition4();
+//        5. Составить программу, которая в массиве A[N] находит второе по величине число
+//                (вывести на печать число, которое меньше максимального элемента массива,
+//                        но больше всех других элементов).
+//        decomposition5();
+//        6. Написать метод(методы), проверяющий, являются ли данные три числа взаимно простыми.
+//        decomposition6();
+//        7. Написать метод(методы) для вычисления суммы факториалов всех нечетных чисел от 1 до 9.
+//        decomposition7();
+        //    8. Задан массив D. Определить следующие суммы: D[l] + D[2] + D[3]; D[3] + D[4]
+//    + D[5]; D[4] +D[5] +D[6].Пояснение. Составить метод(методы) для вычисления суммы
+//    трех последовательно расположенных элементов массива с номерами от k до m.
+//        decomposition8();
+//        9. Даны числа X, Y, Z, Т — длины сторон четырехугольника. Написать метод(методы) вычисления его площади,
+//        если угол между сторонами длиной X и Y— прямой.
+        decomposition9();
+        //       10. Дано натуральное число N. Написать метод(методы) для формирования массива,
+        //       элементами которого являются цифры числа N.
+
+
     }
 
     public static int getAB(int a, int b) {
@@ -138,5 +157,181 @@ public class Decompositions {
             }
         }
         return new int[]{maxIndexX, maxIndexY};
+    }
+    //        5. Составить программу, которая в массиве A[N] находит второе по величине число
+//                (вывести на печать число, которое меньше максимального элемента массива,
+//                        но больше всех других элементов).
+
+    public static void decomposition5() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(" Enter  the number items   - > ");
+        int n = scanner.nextInt();
+        int[] array = new int[n];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int) (Math.random() * 100 + 1);
+            System.out.print(array[i] + ", ");
+        }
+        System.out.println();
+        int max = getMaxValueArray(array);
+        System.out.println("Maximum vaylue in arra - > " + max);
+        System.out.println(" Second maximum vaylue in arra - > " + getSecondMaxValueArray(array, max));
+
+    }
+
+    public static int getMaxValueArray(int[] array) {
+        int maxValue = Integer.MIN_VALUE;
+        for (int i = 0; i < array.length; i++) {
+
+            if (array[i] > maxValue) {
+                maxValue = array[i];
+            }
+        }
+        return maxValue;
+    }
+
+    public static int getSecondMaxValueArray(int[] array, int maxValue) {
+
+        int secondMax = Integer.MIN_VALUE;
+
+        for (int j = 0; j < array.length; j++) {
+            if (array[j] > secondMax && secondMax != maxValue) {
+                secondMax = array[j];
+            }
+        }
+        return secondMax;
+    }
+
+    //6. Написать метод(методы), проверяющий, являются ли данные три числа взаимно простыми.
+    public static void decomposition6() {
+        System.out.println("Enter 3 number - >");
+
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        int c = sc.nextInt();
+
+        boolean primeA = primeNumber(a);
+        boolean primeB = primeNumber(b);
+        boolean primeC = primeNumber(c);
+
+        System.out.println(primeA);
+        System.out.println(primeB);
+        System.out.println(primeC);
+
+        if (primeA == true && primeB == true && primeC == true) {
+            System.out.println("Simple numbers");
+        } else System.out.println("One or more numbers are not simple");
+    }
+
+    private static boolean primeNumber(int x) {
+
+        boolean prime = true;
+
+        if (x == 1) {
+            prime = false;
+        }
+
+        for (int i = 2; i < x; i++) {
+            if (x % i == 0) {
+                prime = false;
+            }
+        }
+        return prime;
+
+    }
+
+    //    7. Написать метод(методы) для вычисления суммы факториалов всех нечетных чисел от 1 до 9.
+    public static void decomposition7() {
+        int summFactorial = 0;
+        for (int i = 1; i <= 9; i += 2) {
+
+            summFactorial += getFactorial(i);
+        }
+        System.out.println("Amount of factorials - >" + summFactorial);
+    }
+
+    public static int getFactorial(int n) {
+        int f = 1;
+        for (int i = 1; i <= n; i++) {
+            f *= i;
+        }
+        return f;
+    }
+
+    //    8. Задан массив D. Определить следующие суммы: D[l] + D[2] + D[3]; D[3] + D[4]
+//    + D[5]; D[4] +D[5] +D[6].Пояснение. Составить метод(методы) для вычисления суммы
+//    трех последовательно расположенных элементов массива с номерами от k до m.
+    public static void decomposition8() {
+        int[] array = new int[7];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int) (Math.random() * 100 + 1);
+            System.out.print(array[i] + ", ");
+        }
+        System.out.println();
+        System.out.println("D[l] + D[2] + D[3] = " + summThreeElemArray(array, 1));
+        System.out.println("D[3] + D[4] + D[5] = " + summThreeElemArray(array, 3));
+        System.out.println("D[4] + D[5] + D[6] = " + summThreeElemArray(array, 4));
+
+    }
+
+    public static int summThreeElemArray(int[] array, int k) {
+        int summElem = 0;
+        for (int i = k; i < k + 3; i++) {
+            summElem += array[i];
+        }
+        return summElem;
+    }
+
+    //    9. Даны числа X, Y, Z, Т — длины сторон четырехугольника.
+//       Написать метод(методы) вычисления его площади, если угол между сторонами длиной X и Y— прямой.
+    public static void decomposition9() {
+        double X = 5, Y = 5, Z = 10, T = 10;
+        double s = getTetragonAreaBySides(X, Y, Z, T);
+        System.out.println("Area of tetragon with sides " + X + " " + Y + " " + Z + " " + T + " = " + s);
+    }
+
+    // угол между сторонами длиной a и b — прямой
+    public static double getTetragonAreaBySides(double a, double b, double c, double d) {
+        double s = 0;
+        double h = getHypotenuse(a, b);
+        s = getRightTriangleArea(a, b) + getTriangeAreaBySides(c, d, h);
+        return s;
+    }
+
+    public static double getTriangeAreaBySides(double a, double b, double c) {
+        double p = (a + b + c) / 2.;
+        double s = Math.sqrt(p * (p - a) * (p - b) * (p - c));
+        return s;
+    }
+
+    public static double getHypotenuse(double a, double b) {
+        return Math.sqrt(a * a + b * b);
+    }
+
+    public static double getRightTriangleArea(double a, double b) {
+        return a * b / 2.;
+    }
+
+    //  10. Дано натуральное число N. Написать метод(методы) для формирования массива, элементами которого являются цифры числа N.
+    public static void decomposition10() {
+
+        long N = 243324553;
+        int[] a = getArrayFromNumerals(N);
+
+        System.out.println("Array from numerals of " + N);
+        for (int i : a) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+
+    public static int[] getArrayFromNumerals(long n) {
+        int size = (int) Math.log10(n) + 1;
+        int[] a = new int[size];
+        for (int i = a.length - 1; i >= 0; i--) {
+            a[i] = (int) (n % 10);
+            n = n / 10;
+        }
+        return a;
     }
 }
