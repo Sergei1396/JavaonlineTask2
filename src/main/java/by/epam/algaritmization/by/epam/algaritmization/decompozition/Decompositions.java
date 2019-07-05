@@ -1,5 +1,6 @@
 package by.epam.algaritmization.by.epam.algaritmization.decompozition;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Decompositions {
@@ -32,11 +33,32 @@ public class Decompositions {
 //        decomposition8();
 //        9. Даны числа X, Y, Z, Т — длины сторон четырехугольника. Написать метод(методы) вычисления его площади,
 //        если угол между сторонами длиной X и Y— прямой.
-        decomposition9();
+//        decomposition9();
         //       10. Дано натуральное число N. Написать метод(методы) для формирования массива,
         //       элементами которого являются цифры числа N.
-
-
+        //     decomposition10();
+//11. Написать метод(методы), определяющий, в каком из данных двух чисел больше цифр.
+//        decomposition11();
+//        12. Даны натуральные числа К и N. Написать метод(методы) формирования массива А,
+//        элементами которого являются числа, сумма цифр которых равна К и которые не большее N.
+//        decomposition12();
+        //    13. Два простых числа называются «близнецами», если они отличаются друг от друга на 2 (например, 41 и 43).
+//    Найти и напечатать все пары «близнецов» из отрезка [n,2n], где n - заданное натуральное число больше 2.
+//    Для решения задачи использовать декомпозицию.
+//        decomposition13();
+//        14. Натуральное число, в записи которого n цифр, называется числом Армстронга,
+//        если сумма его цифр, возведенная в степень n, равна самому числу. Найти все числа Армстронга от 1 до k.
+//        Для решения задачи использовать декомпозицию.
+//        decomposition14();
+//        15. Найти все натуральные n-значные числа, цифры в которых образуют строго возрастающую последовательность (например, 1234, 5789).
+//        Для решения задачи использовать декомпозицию.
+//        decomposition15();
+//  16. Написать программу, определяющую сумму n - значных чисел, содержащих только нечетные цифры.
+//  Определить также, сколько четных цифр в найденной сумме. Для решения задачи использовать декомпозицию.
+//decomposition16();
+//    17. Из заданного числа вычли сумму его цифр. Из результата вновь вычли сумму его цифр и т.д.
+//    Сколько таких действий надо произвести, чтобы получился нуль? Для решения задачи использовать декомпозицию.
+        decomposition17();
     }
 
     public static int getAB(int a, int b) {
@@ -333,5 +355,297 @@ public class Decompositions {
             n = n / 10;
         }
         return a;
+    }
+
+    // 11. Написать метод(методы), определяющий, в каком из данных двух чисел больше цифр.
+    public static void decomposition11() {
+
+        long a = 12345678L;
+        long b = 87654321L;
+        System.out.println("Numbers: " + a + ", " + b);
+        int countA = countNumeral(a);
+        int countB = countNumeral(b);
+        comparisonNumbers(countA, countB);
+
+    }
+
+    public static int countNumeral(long a) {
+        int counter = 0;
+        boolean count = true;
+
+        while (count) {
+            if (0 < a) {
+                a = a / 10;
+                counter++;
+
+            } else {
+                count = false;
+            }
+        }
+
+        return counter;
+    }
+
+    public static void comparisonNumbers(int a, int b) {
+        if (a > b) {
+            System.out.println("The first number has more digits.");
+        } else if (a == b) {
+            System.out.println("Same number of digits.");
+        } else {
+            System.out.println("The first number has more digits");
+        }
+    }
+
+    //12. Даны натуральные числа К и N.Написать метод(методы) формирования массива А,
+// элементами которого являются числа, сумма цифр которых равна К и которые не большее N.
+    public static void decomposition12() {
+        int K = 10;
+        int N = 100;
+
+        System.out.println("K = " + K + ", N = " + N);
+
+        int[] a = getArray(K, N);
+
+        System.out.println("Array: ");
+        for (int i : a) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
+
+    private static int getNumeralsSum(int a) {
+        int sum = 0;
+        while (a > 0) {
+            sum += a % 10;
+            a /= 10;
+        }
+        return sum;
+    }
+
+    private static int[] getArray(int K, int N) {
+        int[] t = new int[N];
+        int count = 0;
+        for (int i = 1; i <= t.length; i++) {
+            if (getNumeralsSum(i) == K) {
+                t[count] = i;
+                count++;
+            }
+        }
+
+        return t;//return Arrays.copyOf(t, count);
+    }
+
+    //    13. Два простых числа называются «близнецами», если они отличаются друг от друга на 2 (например, 41 и 43).
+//    Найти и напечатать все пары «близнецов» из отрезка [n,2n], где n - заданное натуральное число больше 2.
+//    Для решения задачи использовать декомпозицию.
+    public static void decomposition13() {
+        System.out.println("Enter value N - >");
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        findTwins(n);
+    }
+
+    public static boolean numberPrime(int a) {
+        if (1 < a) {
+            for (int i = 2; i <= a / 2 + 1; i++) {
+                if (a % i == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static void findTwins(int n) {
+        int oldPrime = 0;
+        for (int i = n; i <= n * 2; i++) {
+            if (numberPrime(i)) {
+                if (oldPrime != 0) {
+
+                    System.out.println("Twins: " + oldPrime + ", " + i);
+                }
+                oldPrime = i;
+            }
+        }
+    }
+
+    //    14. Натуральное число, в записи которого n цифр, называется числом Армстронга,
+//    если сумма его цифр, возведенная в степень n, равна самому числу. Найти все числа Армстронга от 1 до k.
+//    Для решения задачи использовать декомпозицию.
+    public static void decomposition14() {
+        int k = 10000;
+
+        findArmstrongNumbers(k);
+
+    }
+
+    private static int getNumeralsCount(int a) {
+        return (int) Math.log10(a) + 1;
+    }
+
+    private static void findArmstrongNumbers(int k) {
+        for (int i = 1; i <= k; i++) {
+            if (isNumberOccurArmstrong(i)) {
+                System.out.println("Armstrong number: " + i);
+            }
+        }
+    }
+
+    private static boolean isNumberOccurArmstrong(int a) {
+        int n = getNumeralsCount(a);
+        int sum = 0;
+        int backup = a;
+        while (a > 0) {
+            sum += Math.pow(a % 10, n);
+            a /= 10;
+        }
+        if (sum == backup) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //    15. Найти все натуральные n-значные числа, цифры в которых образуют строго возрастающую
+//    последовательность (например, 1234, 5789). Для решения задачи использовать декомпозицию.
+    public static void decomposition15() {
+        int n = 3;
+        findNumbersWithIncreaseNumerals(n);
+    }
+
+    private static void findNumbersWithIncreaseNumerals(int n) {
+        int first = getMinNumber(n);
+        int last = getMaxNumber(n);
+
+        for (int i = first; i < last; i++) {
+            if (isNumberWithIncreaseNumerals(i)) {
+                System.out.println("Num with incr numerals: " + i);
+            }
+        }
+
+    }
+
+    private static boolean isNumberWithIncreaseNumerals(int a) {
+        int old = -1;
+        while (a > 0) {
+            int n = a % 10;
+            if (old != -1) {
+                if (old <= n) {
+                    return false;
+                }
+            }
+            old = n;
+            a /= 10;
+        }
+        return true;
+    }
+
+    private static int getMinNumber(int n) {
+        int a = 1;
+        for (int i = 1; i < n; i++) {
+            a *= 10;
+        }
+        return a;
+    }
+
+    private static int getMaxNumber(int n) {
+        int a = 1;
+        for (int i = 0; i < n; i++) {
+            a *= 10;
+        }
+        return a;
+    }
+
+    //  16. Написать программу, определяющую сумму n - значных чисел, содержащих только нечетные цифры.
+    //  Определить также, сколько четных цифр в найденной сумме. Для решения задачи использовать декомпозицию.
+    public static void decomposition16() {
+        int n = 3;
+
+        int sum = findSumNumbersWithOddNumerals(n);
+        System.out.println("Sum of numbers with odd numerals: " + sum);
+
+        int k = findEvenNumeralsCount(sum);
+        System.out.println("Count of even numerals in sum: " + k);
+
+    }
+
+    private static int findEvenNumeralsCount(int a) {
+        int k = 0;
+        while (a > 0) {
+            int n = a % 10;
+            if (n % 2 == 0) {
+                k++;
+            }
+            a /= 10;
+        }
+        return k;
+    }
+
+    private static int findSumNumbersWithOddNumerals(int n) {
+        int first = getMinNumber16(n);
+        int last = getMaxNumber16(n);
+
+        int sum = 0;
+        for (int i = first; i < last; i++) {
+            if (isNumberConsistOfOddNumerals(i)) {
+                sum += i;
+            }
+        }
+        return sum;
+    }
+
+    private static boolean isNumberConsistOfOddNumerals(int a) {
+        while (a > 0) {
+            int n = a % 10;
+            if (n % 2 == 0) {
+                return false;
+            }
+            a /= 10;
+        }
+        return true;
+    }
+
+    private static int getMinNumber16(int n) {
+        int a = 1;
+        for (int i = 1; i < n; i++) {
+            a *= 10;
+        }
+        return a;
+    }
+
+    private static int getMaxNumber16(int n) {
+        int a = 1;
+        for (int i = 0; i < n; i++) {
+            a *= 10;
+        }
+        return a;
+    }
+
+    //    17. Из заданного числа вычли сумму его цифр. Из результата вновь вычли сумму его цифр и т.д.
+//    Сколько таких действий надо произвести, чтобы получился нуль? Для решения задачи использовать декомпозицию.
+    public static void decomposition17() {
+        int a = 1234;
+        System.out.println("Number: " + a);
+
+        int k = getActionCount(a);
+        System.out.println("Actions count: " + k);
+    }
+
+    private static int getActionCount(int a) {
+        int k = 0;
+        while (a > 0) {
+            a -= getNumeralsSum17(a);
+            k++;
+        }
+        return k;
+    }
+
+    private static int getNumeralsSum17(int a) {
+        int sum = 0;
+        while (a > 0) {
+            sum += a % 10;
+            a /= 10;
+        }
+        return sum;
     }
 }
